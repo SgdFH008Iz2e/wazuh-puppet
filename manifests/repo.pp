@@ -5,7 +5,7 @@ class wazuh::repo (
 
   case $::osfamily {
     'Debian' : {
-      $wazuh_repo_url = 'https://packages.wazuh.com/5.x/apt'
+      $wazuh_repo_url = 'https://packages.wazuh.com/4.x/apt'
       $repo_release = 'stable'
 
       if $::lsbdistcodename =~ /(jessie|wheezy|stretch|precise|trusty|vivid|wily|xenial|yakketi|groovy)/
