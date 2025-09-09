@@ -573,9 +573,11 @@ class wazuh::agent (
           notify  => Service[$agent_service_name],
         }
 
+        # Here is functionality for making the service disabled if no agent key/cert pair is present (eg. for large deployments where u need to verify if agent is not making your nodes unstable), u need to add this fact by yourself into repository (via your node definition or module)
+        $agent_enrolled = $facts['wazuh_agent_enrolled']
         service { $agent_service_name:
-          ensure    => $agent_service_ensure,
-          enable    => true,
+          ensure    => $agent_enrolled,
+          enable    => $agent_enrolled,
           hasstatus => $wazuh::params_agent::service_has_status,
           pattern   => $wazuh::params_agent::agent_service_name,
           provider  => $wazuh::params_agent::ossec_service_provider,
