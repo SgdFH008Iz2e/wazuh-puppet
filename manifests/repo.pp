@@ -39,7 +39,7 @@ class wazuh::repo (
               'deb' => true,
             },
             require => File['/usr/share/keyrings/wazuh.gpg'],
-            notify=>Exec['apt-update']
+            before=>Exec['apt-update']
           }
           # Manage the APT source list file content using concat
           concat { '/etc/apt/sources.list.d/wazuh.list':
@@ -47,6 +47,7 @@ class wazuh::repo (
             owner   => 'root',
             group   => 'root',
             mode    => '0644',
+            before =>Exec['apt-update']
           }
 
           concat::fragment { 'wazuh-source':
