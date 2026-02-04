@@ -67,7 +67,8 @@ class wazuh::repo (
         refreshonly => true,
         path        => ['/bin', '/usr/bin'],
         require     => Concat['/etc/apt/sources.list.d/wazuh.list'],
-      }
+      }->  notify { "Checking when apt update gets resolved": loglevel => "info" }
+
     }
     'Linux', 'RedHat', 'Suse' : {
       case $facts['os'][name] {
