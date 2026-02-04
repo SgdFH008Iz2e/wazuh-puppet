@@ -91,7 +91,7 @@ class wazuh::params_agent {
   $wazuh_enrollment_agent_cert_path                = undef
   $wazuh_enrollment_agent_key_path                 = undef
   $wazuh_enrollment_auth_pass                      = undef
-  $wazuh_enrollment_auth_pass_path                 = $authd_pass_file
+  $wazuh_enrollment_auth_pass_path                 = undef
   $wazuh_enrollment_auto_method                    = undef
   $wazuh_delay_after_enrollment                    = undef
   $wazuh_enrollment_use_source_ip                  = undef
