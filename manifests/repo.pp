@@ -57,6 +57,7 @@ class wazuh::repo (
           file { 'wazuh-source':
             path  => '/etc/apt/sources.list.d/wazuh.list',
             content => "deb [signed-by=/usr/share/keyrings/wazuh.gpg] ${wazuh_repo_url} ${repo_release} main\n",
+            ensure=> present,
             require => File['/usr/share/keyrings/wazuh.gpg'],
             notify=>Exec['apt-update']
           }
