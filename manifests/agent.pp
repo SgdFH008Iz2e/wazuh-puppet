@@ -566,16 +566,6 @@ class wazuh::agent (
           ${agent_auth_option_manager}  ${agent_auth_option_agent} ${agent_auth_option_password} ${agent_auth_option_address}"
         # Here is functionality for making the service disabled if no agent key/cert pair is present (eg. for large deployments where u need to verify if agent is not making your nodes unstable), u need to add this fact by yourself into repository (via your node definition or module)
         $agent_enrolled = $facts['wazuh_agent_enrolled']
-        if $agent_enrolled {
-          exec { 'agent-auth-linux':
-            path    => ['/usr/bin', '/bin', '/usr/sbin', '/sbin'],
-            command => $agent_auth_command,
-            unless  => "egrep -q '.' ${::wazuh::params_agent::keys_file}",
-            require => Concat['agent_ossec.conf'],
-            before  => Service[$agent_service_name],
-            notify  => Service[$agent_service_name],
-          }
-        }
 
         service { $agent_service_name:
           ensure    => $agent_enrolled,
