@@ -274,7 +274,9 @@ class wazuh::agent (
 
       package { $agent_package_name:
         ensure => "${agent_package_version}-${agent_package_revision}", # lint:ignore:security_package_pinned_version
-        require=> Concat['wazuh-source']
+        require=> Concat_fragment['wazuh-source']
+
+
       }->  notify { "Checking if packages is installed before apt update gets resolved": loglevel => "info" }
     }
     'windows': {
