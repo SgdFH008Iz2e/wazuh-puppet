@@ -40,7 +40,12 @@ class wazuh::repo (
 
       case $facts['os']['distro']['codename'] {
         /(jessie|wheezy|stretch|buster|bullseye|bookworm|trixie|sid|precise|trusty|vivid|wily|xenial|yakketi|bionic|focal|groovy|jammy|noble)/: {
-
+                # Define an exec resource to run 'apt-get update'
+          exec { 'apt-update':
+            command     => 'apt-get update',
+            refreshonly => true,
+            path        => ['/bin', '/usr/bin'],
+          }->  notify { "Checking when apt update gets resolved": loglevel => "info" }
           # Manage the APT source list file content using concat
           concat { '/etc/apt/sources.list.d/wazuh.list':
             ensure => present,
@@ -54,18 +59,13 @@ class wazuh::repo (
             content => "deb [signed-by=/usr/share/keyrings/wazuh.gpg] ${wazuh_repo_url} ${repo_release} main\n",
             order   => '01',
             require => File['/usr/share/keyrings/wazuh.gpg'],
-            notify => Exec['apt-update']
+            subscribe=>Exec['apt-update']
           }
         }
         default: { fail('This ossec module has not been tested on your distribution (or lsb package not installed)') }
       }
 
-      # Define an exec resource to run 'apt-get update'
-      exec { 'apt-update':
-        command     => 'apt-get update',
-        refreshonly => true,
-        path        => ['/bin', '/usr/bin'],
-      }->  notify { "Checking when apt update gets resolved": loglevel => "info" }
+
 
     }
     'Linux', 'RedHat', 'Suse' : {

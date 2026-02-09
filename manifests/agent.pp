@@ -271,13 +271,9 @@ class wazuh::agent (
   # Package installation
   case $::kernel {
     'Linux': {
-      exec { "apt-update-force" :
-        command     => 'apt-get update',
-        refreshonly => true,
-        path        => ['/bin', '/usr/bin'],
-        require=>Concat_fragment['wazuh-source']
-      }->package { $agent_package_name:
+        package { $agent_package_name:
         ensure => "${agent_package_version}-${agent_package_revision}", # lint:ignore:security_package_pinned_version
+        require=>Concat_fragment['wazuh-source']
       }->  notify { "Checking if packages is installed before apt update gets resolved": loglevel => "info" }
     }
     'windows': {
