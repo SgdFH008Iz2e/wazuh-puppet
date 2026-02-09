@@ -242,6 +242,7 @@ class wazuh::agent (
   # Logging
   $logging_log_format                = $wazuh::params_agent::logging_log_format,
 ) inherits wazuh::params_agent {
+  require wazuh::repo
   # validate_bool(
   #   $ossec_active_response, $ossec_rootcheck,
   #   $selinux,
