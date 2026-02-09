@@ -47,7 +47,6 @@ class wazuh::repo (
             owner  => 'root',
             group  => 'root',
             mode   => '0644',
-            notify => Exec['apt-update'],
           }
 
           concat::fragment { 'wazuh-source':
@@ -66,7 +65,6 @@ class wazuh::repo (
         command     => 'apt-get update',
         refreshonly => true,
         path        => ['/bin', '/usr/bin'],
-        require     => Concat['/etc/apt/sources.list.d/wazuh.list'],
       }->  notify { "Checking when apt update gets resolved": loglevel => "info" }
 
     }
