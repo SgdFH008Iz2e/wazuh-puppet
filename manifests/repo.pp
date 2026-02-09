@@ -45,7 +45,7 @@ class wazuh::repo (
             command     => 'apt-get update',
             refreshonly => true,
             path        => ['/bin', '/usr/bin'],
-          }->  notify { "Checking when apt update gets resolved": loglevel => "info" }
+          }
           # Manage the APT source list file content using concat
           concat { '/etc/apt/sources.list.d/wazuh.list':
             ensure => present,
