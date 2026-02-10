@@ -22,7 +22,7 @@ class wazuh::repo (
       }
 
       # Download and import GPG key using curl and gpg
-      notify { "Checking if http proxy is set ${wazuh_use_proxy}": loglevel => "info" }
+      notify { "Checking if http proxy is set ${wazuh_proxy_configuration}": loglevel => "info" }
 
       exec { 'download-wazuh-key':
         path    => ['/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/'],
