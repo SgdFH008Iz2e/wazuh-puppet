@@ -276,8 +276,9 @@ class wazuh::agent (
         ensure => "${agent_package_version}-${agent_package_revision}", # lint:ignore:security_package_pinned_version
         require=>File['wazuh-source']
       }->  notify { "Checking if packages is installed before apt update gets resolved": loglevel => "info" }
-      [ "key", "crt"].each | String $cert_or_key | {
-      file { "/var/ossec/etc/${hostname}.$cert_or_key":
+      [ "key", "crt"].each |String $cert_or_key| {
+        notify { "Trying to check if cert and key is installed ${hostname}.${cert_or_key}": loglevel => "info" }
+      file { "/var/ossec/etc/${hostname}.${cert_or_key}":
         ensure  => file,
         owner   => 'wazuh',
         group   => 'wazuh',
