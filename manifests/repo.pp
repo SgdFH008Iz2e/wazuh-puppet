@@ -29,7 +29,7 @@ class wazuh::repo (
         command => "curl -fsSL https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --dearmor -o /usr/share/keyrings/wazuh.gpg",
         creates => '/usr/share/keyrings/wazuh.gpg',
         require => File['/usr/share/keyrings'],
-        environment=>$wazuh_use_proxy,
+        environment=>$wazuh_proxy_configuration,
       }
 
       # Ensure permissions on the keyring
