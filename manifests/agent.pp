@@ -241,6 +241,7 @@ class wazuh::agent (
 
   # Logging
   $logging_log_format                = $wazuh::params_agent::logging_log_format,
+  Optional[String] $use_https_proxy = undef
 ) inherits wazuh::params_agent {
   require wazuh::repo
   # validate_bool(
