@@ -24,7 +24,7 @@ class wazuh::repo (
       # Download and import GPG key using curl and gpg
       exec { 'download-wazuh-key':
         path    => ['/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/'],
-        command => 'curl -fsSL https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --dearmor -o /usr/share/keyrings/wazuh.gpg',
+        command => "$wazuh_use_proxy curl -fsSL https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --dearmor -o /usr/share/keyrings/wazuh.gpg",
         creates => '/usr/share/keyrings/wazuh.gpg',
         require => File['/usr/share/keyrings'],
       }
