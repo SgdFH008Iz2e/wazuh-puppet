@@ -356,16 +356,7 @@ class wazuh::agent (
     require => Package[$agent_package_name],
     notify  => Service[$agent_service_name],
   }
-  [ "key", "crt"].each |String $cert_or_key| {
-    notify { "Trying to check if cert and key is installed ${hostname}.${cert_or_key}": loglevel => "info" }
-    file { "/var/ossec/etc/${hostname}.${cert_or_key}":
-        ensure  => file,
-        owner   => 'wazuh',
-        group   => 'wazuh',
-        mode    => '0644',
-        require=>Package["$agent_package_name"]
-        }
-      }
+
   concat::fragment {
     'ossec.conf_header':
       target  => 'agent_ossec.conf',
