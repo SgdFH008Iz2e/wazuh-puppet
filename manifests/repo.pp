@@ -21,15 +21,12 @@ class wazuh::repo (
         mode   => '0755',
       }
 
-      # Download and import GPG key using curl and gpg
-      notify { "Checking if http proxy is set ${::wazuh_proxy_configuration}": loglevel => "info" }
 
       exec { 'download-wazuh-key':
         path    => ['/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/'],
         command => "curl -fsSL https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --dearmor -o /usr/share/keyrings/wazuh.gpg",
         creates => '/usr/share/keyrings/wazuh.gpg',
         require => File['/usr/share/keyrings'],
-        environment=>$::wazuh_proxy_configuration,
       }
 
       # Ensure permissions on the keyring
