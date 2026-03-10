@@ -26,16 +26,15 @@ class wazuh::repo (
       }
 
 
-
-
-      # Ensure permissions on the keyring
-     if ! defined(File['/usr/share/keyrings/wazuh.gpg']){
-       exec { 'download-wazuh-key':
+      exec { 'download-wazuh-key':
         path    => ['/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/'],
         command => "curl -fsSL https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --dearmor -o /usr/share/keyrings/wazuh.gpg",
         creates => '/usr/share/keyrings/wazuh.gpg',
         require => File['/usr/share/keyrings'],
       }
+
+      # Ensure permissions on the keyring
+     if ! defined(File['/usr/share/keyrings/wazuh.gpg']){
       file { '/usr/share/keyrings/wazuh.gpg':
         ensure  => file,
         owner   => 'root',
