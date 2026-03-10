@@ -34,7 +34,6 @@ class wazuh::repo (
       }
 
       # Ensure permissions on the keyring
-     if ! defined(File['/usr/share/keyrings/wazuh.gpg']){
       file { '/usr/share/keyrings/wazuh.gpg':
         ensure  => file,
         owner   => 'root',
@@ -42,8 +41,6 @@ class wazuh::repo (
         mode    => '0644',
         require => Exec['download-wazuh-key'],
       }
-     }
-
 
       case $facts['os']['distro']['codename'] {
         /(jessie|wheezy|stretch|buster|bullseye|bookworm|trixie|sid|precise|trusty|vivid|wily|xenial|yakketi|bionic|focal|groovy|jammy|noble)/: {
