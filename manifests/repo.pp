@@ -25,10 +25,12 @@ class wazuh::repo (
         mode   => '0755',
       }
 
-
+      if ! $wazuh_key_url {
+        $wazuh_key_url = "https://packages.wazuh.com/key/GPG-KEY-WAZUH"
+      }
       exec { 'download-wazuh-key':
         path    => ['/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/'],
-        command => "curl -fsSL https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --dearmor -o /usr/share/keyrings/wazuh.gpg",
+        command => "curl -fsSL $wazuh_key_url | gpg --dearmor -o /usr/share/keyrings/wazuh.gpg",
         creates => '/usr/share/keyrings/wazuh.gpg',
         require => File['/usr/share/keyrings'],
       }
